@@ -28,10 +28,11 @@ public class StoreBean implements StoreLocal, StoreRemote {
 
 
     @Override
-    public void storeNewProduct(ProductTO product) {
+    public ProductTO storeNewProduct(ProductTO product) {
         log.info("Salving product: " + product.getProductCode());
         Product entity = StoreConverter.toProduct(product);
         em.persist(entity);
+        return StoreConverter.toProductTO(entity);
     }
 
 
@@ -90,27 +91,27 @@ public class StoreBean implements StoreLocal, StoreRemote {
 
     @Override
     public String getLocation(String productCode) {
-        log.info("Search Local, where productCode= " + productCode);
+        log.info("Search Location, where productCode= " + productCode);
         TypedQuery<String> query = em.createQuery("SELECT p.location FROM Product p WHERE p.productCode = :productCode", String.class);
         query.setParameter("productCode", productCode);
-        List<String> LocalList = query.getResultList();
-        if (LocalList.isEmpty()) {
+        List<String> locationList = query.getResultList();
+        if (locationList.isEmpty()) {
             return null;
         }
 
-        return LocalList.get(0);
+        return locationList.get(0);
     }
 
     @Override
     public int getEnterDate(String productCode) {
-        log.info("Search time that product has been stored, where productCode= " + productCode);
+        log.info("Search for how long product has been stored, where productCode= " + productCode);
         TypedQuery<Integer> query = em.createQuery("SELECT p.enterDate FROM Product p WHERE p.productCode = :productCode", Integer.class);
         query.setParameter("productCode", productCode);
-        List<Integer> ageList = query.getResultList();
-        if (ageList.isEmpty()) {
+        List<Integer> entryDateList = query.getResultList();
+        if (entryDateList.isEmpty()) {
             return 0;
         }
 
-        return ageList.get(0);
+        return entryDateList.get(0);
     }
 }

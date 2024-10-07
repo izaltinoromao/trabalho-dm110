@@ -18,5 +18,5 @@ public interface Store {
 
     public int getEnterDate(String productCode);
 
-    public void storeNewProduct(ProductTO product);
+    public ProductTO storeNewProduct(ProductTO product);
 }

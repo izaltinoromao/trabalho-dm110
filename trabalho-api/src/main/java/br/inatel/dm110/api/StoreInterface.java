@@ -1,5 +1,7 @@
 package br.inatel.dm110.api;
 
+import jakarta.ws.rs.core.Response;
+
 import java.util.List;
 
 public interface StoreInterface {
@@ -8,13 +10,13 @@ public interface StoreInterface {
 
     public ProductTO getProduct(String productCode);
 
-    public int getProductAmount(String productCode);
+    public Response getProductAmount(String productCode);
 
-    public int getMinimumAmount(String productCode);
+    public Response getMinimumAmount(String productCode);
 
-    public String getLocation(String productCode);
+    public Response getLocation(String productCode);
 
-    public int getEnterDate(String productCode);
+    public Response getEnterDate(String productCode);
 
-    public void storeNewProduct(ProductTO product);
+    public Response storeNewProduct(ProductTO product);
 }

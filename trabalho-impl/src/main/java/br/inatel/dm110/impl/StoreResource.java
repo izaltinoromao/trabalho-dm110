@@ -2,12 +2,14 @@ package br.inatel.dm110.impl;
 
 import br.inatel.dm110.api.ProductTO;
 import br.inatel.dm110.api.StoreInterface;
-import br.inatel.dm110.interfaces.Store;
 import br.inatel.dm110.interfaces.StoreLocal;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 import java.util.List;
 
@@ -39,43 +41,69 @@ public class StoreResource implements StoreInterface {
     @Path("/product/amount/{productCode}")
     @Produces(MediaType.APPLICATION_JSON)
     @Override
-    public int getProductAmount(@PathParam("productCode")String productCode) {
+    public Response getProductAmount(@PathParam("productCode")String productCode) {
 
-        return storeBean.getProductAmount(productCode);
+        int amountStored = storeBean.getProductAmount(productCode);
+
+        JsonObject json = Json.createObjectBuilder()
+                .add("amountStored", amountStored)
+                .build();
+
+        return Response.ok(json).build();
     }
 
     @GET
     @Path("/product/minimum/{productCode}")
     @Produces(MediaType.APPLICATION_JSON)
     @Override
-    public int getMinimumAmount(@PathParam("productCode")String productCode) {
+    public Response getMinimumAmount(@PathParam("productCode")String productCode) {
 
-        return storeBean.getMinimumAmount(productCode);
+        int minimumAmount = storeBean.getMinimumAmount(productCode);
+
+        JsonObject json = Json.createObjectBuilder()
+                .add("minimumAmount", minimumAmount)
+                .build();
+
+        return Response.ok(json).build();
     }
 
     @GET
-    @Path("/product/local/{productCode}")
+    @Path("/product/location/{productCode}")
     @Produces(MediaType.APPLICATION_JSON)
     @Override
-    public String getLocation(@PathParam("productCode")String productCode) {
+    public Response getLocation(@PathParam("productCode")String productCode) {
 
-        return storeBean.getLocation(productCode);
+        String location = storeBean.getLocation(productCode);
+
+        JsonObject json = Json.createObjectBuilder()
+                .add("location", location)
+                .build();
+
+        return Response.ok(json).build();
     }
 
     @GET
-    @Path("/product/age/{productCode}")
+    @Path("/product/enterDate/{productCode}")
     @Produces(MediaType.APPLICATION_JSON)
     @Override
-    public int getEnterDate(@PathParam("productCode")String productCode) {
+    public Response getEnterDate(@PathParam("productCode")String productCode) {
 
-        return storeBean.getEnterDate(productCode);
+        int enterDate = storeBean.getEnterDate(productCode);
+
+        JsonObject json = Json.createObjectBuilder()
+                .add("enterDate", enterDate)
+                .build();
+
+        return Response.ok(json).build();
     }
 
     @POST
     @Path("/product")
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     @Override
-    public void storeNewProduct(ProductTO product) {
-        storeBean.storeNewProduct(product);
+    public Response storeNewProduct(ProductTO product) {
+        ProductTO productTO = storeBean.storeNewProduct(product);
+        return Response.status(Response.Status.CREATED).entity(productTO).build();
     }
 }
