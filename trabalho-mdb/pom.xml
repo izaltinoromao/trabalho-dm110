@@ -15,6 +15,7 @@
 
 	<groupId>br.inatel.dm110</groupId>
 	<artifactId>trabalho-mdb</artifactId>
+	<version>1.0</version>
 	<packaging>ejb</packaging>
 
 	<build>
@@ -34,7 +35,12 @@
 		<dependency>
 			<groupId>br.inatel.dm110</groupId>
 			<artifactId>trabalho-api</artifactId>
+			<version>1.0</version>
 			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.hsqldb</groupId>
