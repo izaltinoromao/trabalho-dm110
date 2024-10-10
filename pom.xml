@@ -47,6 +47,12 @@
 			  <type>ejb</type>
 		</dependency>
 		<dependency>
+			<groupId>br.inatel.dm110</groupId>
+			<artifactId>trabalho-mdb</artifactId>
+			<version>1.0</version>
+			<type>ejb</type>
+		</dependency>
+		<dependency>
 			  <groupId>br.inatel.dm110</groupId>
 			  <artifactId>trabalho-app-client</artifactId>
 			  <version>1.0</version>

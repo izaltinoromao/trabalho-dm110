@@ -8,14 +8,13 @@
 	<description>MDB project of DM 110</description>
 	<properties></properties>
 	<parent>
-		<groupId>br.inatel.dm110.base</groupId>
+		<groupId>br.inatel.dm110</groupId>
 		<artifactId>parent</artifactId>
 		<version>1.0</version>
 	</parent>
 
 	<groupId>br.inatel.dm110</groupId>
 	<artifactId>trabalho-mdb</artifactId>
-	<version>1.0</version>
 	<packaging>ejb</packaging>
 
 	<build>
