@@ -1,6 +1,3 @@
-# trabalho-dm110
-
-[![Java CI](https://github.com/LucasSResende/IDP_Project3/actions/workflows/cicdProject3.yml/badge.svg)](https://github.com/LucasSResende/IDP_Project3/actions/workflows/cicdProject3.yml)
 <h1 align="center">DM110 Final Project</h1>
 
 ## 🎓 About Project
@@ -38,7 +35,7 @@ The following tools were used in the construction of the project:
 
 ## 📁 Class Diagram
 
-###         
+###          
 
 ### Sequence Diagrams
 
