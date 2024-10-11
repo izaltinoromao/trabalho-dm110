@@ -22,7 +22,7 @@ public class AuditMessage {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private LocalDateTime timeStamp;
     private String message;

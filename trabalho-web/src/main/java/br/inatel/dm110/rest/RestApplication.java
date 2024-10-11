@@ -1,5 +1,6 @@
 package br.inatel.dm110.rest;
 
+import br.inatel.dm110.impl.AuditResource;
 import br.inatel.dm110.impl.StoreResource;
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
@@ -16,7 +17,7 @@ public class RestApplication extends Application {
 
         //register the classes to publish the rest service
         classes.add(StoreResource.class);
-
+        classes.add(AuditResource.class);
         return classes;
     }
 }
