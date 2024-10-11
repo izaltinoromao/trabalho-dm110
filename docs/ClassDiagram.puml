@@ -1,0 +1,143 @@
+@startuml
+interface AuditInterface {
+    + List<AuditMessageTO> getAllAudits()
+}
+
+class AuditMessageTO {
+    - LocalDateTime timeStamp
+    - String message
+}
+
+class ProductTO {
+    - String productCode
+    - int amountStored
+    - int minimumAmount
+    - String location
+    - int enterDate
+}
+
+interface StoreInterface {
+    + List<ProductTO> getAllProductCodes()
+    + ProductTO getProduct(String productCode)
+    + Response getProductAmount(String productCode)
+    + Response getMinimumAmount(String productCode)
+    + Response getLocation(String productCode)
+    + Response getEnterDate(String productCode)
+    + Response storeNewProduct(ProductTO product)
+}
+
+interface Audit {
+    + void saveAudit(String message)
+    + List<AuditMessageTO> getAllAudits()
+}
+
+interface AuditLocal extends Audit {
+}
+
+interface AuditRemote extends Audit {
+}
+
+interface Store {
+    + List<ProductTO> getAllProductCodes()
+    + ProductTO getProduct(String productCode)
+    + int getProductAmount(String productCode)
+    + int getMinimumAmount(String productCode)
+    + String getLocation(String productCode)
+    + int getEnterDate(String productCode)
+    + ProductTO storeNewProduct(ProductTO product)
+}
+
+interface StoreLocal extends Store {
+}
+
+interface StoreRemote extends Store {
+}
+
+class AuditBean {
+    - Logger log
+    - EntityManager em
+    + void saveAudit(String message)
+    + List<AuditMessageTO> getAllAudits()
+}
+
+class AuditQueueSender {
+    - Logger log
+    - ConnectionFactory connectionFactory
+    - Queue queue
+    + void sendTextMessage(String text)
+}
+
+class StoreBean {
+    - Logger log
+    - EntityManager em
+    - AuditQueueSender queueSender
+    + ProductTO storeNewProduct(ProductTO product)
+    + List<ProductTO> getAllProductCodes()
+    + ProductTO getProduct(String productCode)
+    + int getProductAmount(String productCode)
+    + int getMinimumAmount(String productCode)
+    + String getLocation(String productCode)
+    + int getEnterDate(String productCode)
+}
+
+class AuditMessage {
+    - int id
+    - LocalDateTime timeStamp
+    - String message
+}
+
+class Product {
+    - String productCode
+    - int amountStored
+    - int minimumAmount
+    - String location
+    - int enterDate
+}
+
+class AuditConverter {
+    + static AuditMessageTO toAuditMessageTO(AuditMessage auditMessage)
+    + static List<AuditMessageTO> toAuditMessageTOList(List<AuditMessage> auditMessageList)
+}
+
+class StoreConverter {
+    + static ProductTO toProductTO(Product product)
+    + static List<ProductTO> toProductTOList(List<Product> productList)
+    + static Product toProduct(ProductTO productTO)
+}
+
+class AuditResource {
+    - AuditLocal auditBean
+    + List<AuditMessageTO> getAllAudits()
+}
+
+class StoreResource {
+    - StoreLocal storeBean
+    + List<ProductTO> getAllProductCodes()
+    + ProductTO getProduct(String productCode)
+    + Response getProductAmount(String productCode)
+    + Response getMinimumAmount(String productCode)
+    + Response getLocation(String productCode)
+    + Response getEnterDate(String productCode)
+    + Response storeNewProduct(ProductTO product)
+}
+
+class RestApplication {
+    + Set<Class<?>> getClasses()
+}
+
+AuditBean --> AuditLocal
+AuditBean --> AuditRemote
+AuditQueueSender --> AuditBean
+
+StoreBean --> StoreLocal
+StoreBean --> StoreRemote
+StoreBean --> AuditQueueSender
+
+AuditMessage --> AuditMessageTO
+Product --> ProductTO
+AuditConverter --> AuditMessage
+StoreConverter --> Product
+
+AuditResource --> AuditLocal
+StoreResource --> StoreLocal
+@enduml

@@ -8,7 +8,7 @@
   <properties></properties>
   <parent>
     <groupId>br.inatel.dm110</groupId>
-    <artifactId>trabalho-parent</artifactId>
+    <artifactId>parent</artifactId>
     <version>1.0</version>
   </parent>
 

@@ -5,6 +5,7 @@ import br.inatel.dm110.entity.Product;
 import br.inatel.dm110.interfaces.StoreLocal;
 import br.inatel.dm110.interfaces.StoreRemote;
 import br.inatel.dm110.support.StoreConverter;
+import jakarta.ejb.EJB;
 import jakarta.ejb.Local;
 import jakarta.ejb.Remote;
 import jakarta.ejb.Stateless;
@@ -26,12 +27,15 @@ public class StoreBean implements StoreLocal, StoreRemote {
     @PersistenceContext(unitName = "trabalho_dm110_pu")
     private EntityManager em;
 
+    @EJB
+    AuditQueueSender queueSender;
 
     @Override
     public ProductTO storeNewProduct(ProductTO product) {
-        log.info("Salving product: " + product.getProductCode());
+        log.info("Saving product: " + product.getProductCode());
         Product entity = StoreConverter.toProduct(product);
         em.persist(entity);
+        queueSender.sendTextMessage("Saving: " + product.getProductCode());
         return StoreConverter.toProductTO(entity);
     }
 

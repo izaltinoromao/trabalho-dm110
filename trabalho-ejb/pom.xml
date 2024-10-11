@@ -9,7 +9,7 @@
   <properties></properties>
   <parent>
     <groupId>br.inatel.dm110</groupId>
-    <artifactId>trabalho-parent</artifactId>
+    <artifactId>parent</artifactId>
     <version>1.0</version>
   </parent>
 
@@ -49,5 +49,10 @@
 			<groupId>jakarta.platform</groupId>
 			<artifactId>jakarta.jakartaee-api</artifactId>
 		</dependency>
+      <dependency>
+          <groupId>org.projectlombok</groupId>
+          <artifactId>lombok</artifactId>
+          <scope>provided</scope>
+      </dependency>
   </dependencies>
 </project>
