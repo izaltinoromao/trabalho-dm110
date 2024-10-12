@@ -22,11 +22,12 @@ public class AuditBean implements AuditLocal, AuditRemote {
     private EntityManager em;
 
     @Override
-    public void saveAudit(String message) {
-        log.info("Saving Audit: " + message);
+    public void saveAudit(AuditMessageTO auditMessageTO) {
+        log.info("Saving Audit: " + auditMessageTO);
         AuditMessage entity = new AuditMessage(
-                LocalDateTime.now(),
-                message
+                auditMessageTO.getProductCode(),
+                auditMessageTO.getOperation(),
+                LocalDateTime.now()
         );
 
         em.persist(entity);

@@ -16,14 +16,16 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class AuditMessage {
 
-    public AuditMessage(LocalDateTime timeStamp, String message) {
+    public AuditMessage(String productCode, String operation, LocalDateTime timeStamp) {
+        this.productCode = productCode;
+        this.operation = operation;
         this.timeStamp = timeStamp;
-        this.message = message;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private String productCode;
+    private String operation;
     private LocalDateTime timeStamp;
-    private String message;
 }

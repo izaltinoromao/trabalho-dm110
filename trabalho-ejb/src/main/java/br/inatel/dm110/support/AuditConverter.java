@@ -9,8 +9,9 @@ import java.util.stream.Collectors;
 public class AuditConverter {
 
     public static AuditMessageTO toAuditMessageTO(AuditMessage auditMessage) {
-        return new AuditMessageTO(auditMessage.getTimeStamp(),
-                auditMessage.getMessage());
+        return new AuditMessageTO(auditMessage.getProductCode(),
+                auditMessage.getOperation(),
+                auditMessage.getTimeStamp());
     }
 
     public static List<AuditMessageTO> toAuditMessageTOList(List<AuditMessage> auditMessageList) {

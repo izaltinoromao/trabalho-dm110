@@ -1,7 +1,11 @@
 package br.inatel.dm110.beans.example;
 
+import br.inatel.dm110.adapters.LocalDateTimeAdapter;
+import br.inatel.dm110.api.AuditMessageTO;
 import br.inatel.dm110.interfaces.Audit;
 import br.inatel.dm110.interfaces.AuditLocal;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import jakarta.ejb.ActivationConfigProperty;
 import jakarta.ejb.EJB;
 import jakarta.ejb.MessageDriven;
@@ -10,6 +14,7 @@ import jakarta.jms.Message;
 import jakarta.jms.MessageListener;
 import jakarta.jms.TextMessage;
 
+import java.time.LocalDateTime;
 import java.util.logging.Logger;
 
 @MessageDriven(activationConfig = {
@@ -30,10 +35,16 @@ public class AuditQueueMDB implements MessageListener {
 				TextMessage txtMessage = (TextMessage) message;
 				String text = txtMessage.getText();
 				log.info("Message Received from Queue: " + text);
-				auditBean.saveAudit(text);
+
+				Gson gson = new GsonBuilder()
+						.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+						.create();
+
+				AuditMessageTO auditMessageTO = gson.fromJson(text, AuditMessageTO.class);
+				auditBean.saveAudit(auditMessageTO);
 			}
 		} catch (JMSException e) {
-			e.printStackTrace();
+			log.warning("Failed to process JMS message. Error: " + e.getMessage() + " - Message: " + message);
 		}
 	}
 

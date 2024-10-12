@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class AuditMessageTO {
 
+    private String productCode;
+    private String operation;
     private LocalDateTime timeStamp;
-    private String message;
 }

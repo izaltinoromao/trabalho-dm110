@@ -1,5 +1,7 @@
 package br.inatel.dm110.beans;
 
+import br.inatel.dm110.api.AuditMessageTO;
+import com.google.gson.Gson;
 import jakarta.annotation.Resource;
 import jakarta.ejb.Stateless;
 import jakarta.jms.ConnectionFactory;
@@ -20,9 +22,9 @@ public class AuditQueueSender {
     @Resource(lookup = "java:/jms/queue/dm110queue")
     private Queue queue;
 
-    public void sendTextMessage(String text) {
+    public void sendTextMessage(AuditMessageTO auditMessageTO) {
         try (JMSContext context = connectionFactory.createContext();) {
-            TextMessage txtMsg = context.createTextMessage(text);
+            TextMessage txtMsg = context.createTextMessage(new Gson().toJson(auditMessageTO));
             log.info("Sending message to queue: " + txtMsg.getText());
             context.createProducer().send(queue, txtMsg);
             log.info("Message sent");

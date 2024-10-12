@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface Audit {
 
-    public void saveAudit(String message);
+    public void saveAudit(AuditMessageTO auditMessageTO);
 
     public List<AuditMessageTO> getAllAudits();
 

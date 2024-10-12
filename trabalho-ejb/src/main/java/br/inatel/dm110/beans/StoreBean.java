@@ -1,7 +1,9 @@
 package br.inatel.dm110.beans;
 
+import br.inatel.dm110.api.AuditMessageTO;
 import br.inatel.dm110.api.ProductTO;
 import br.inatel.dm110.entity.Product;
+import br.inatel.dm110.enums.Operation;
 import br.inatel.dm110.interfaces.StoreLocal;
 import br.inatel.dm110.interfaces.StoreRemote;
 import br.inatel.dm110.support.StoreConverter;
@@ -13,6 +15,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -35,7 +38,12 @@ public class StoreBean implements StoreLocal, StoreRemote {
         log.info("Saving product: " + product.getProductCode());
         Product entity = StoreConverter.toProduct(product);
         em.persist(entity);
-        queueSender.sendTextMessage("Saving: " + product.getProductCode());
+
+        AuditMessageTO auditMessageTO = new AuditMessageTO(product.getProductCode(),
+                Operation.CREATE.getOperation(),
+                LocalDateTime.now());
+        queueSender.sendTextMessage(auditMessageTO);
+
         return StoreConverter.toProductTO(entity);
     }
 
@@ -44,6 +52,11 @@ public class StoreBean implements StoreLocal, StoreRemote {
     public List<ProductTO> getAllProductCodes() {
         log.info("Search for all products: ");
         TypedQuery<Product> query = em.createQuery("SELECT p FROM Product p", Product.class);
+
+        AuditMessageTO auditMessageTO = new AuditMessageTO(null,
+                Operation.GET.getOperation(),
+                LocalDateTime.now());
+        queueSender.sendTextMessage(auditMessageTO);
 
         return StoreConverter.toProductTOList(query.getResultList());
     }
@@ -62,6 +75,11 @@ public class StoreBean implements StoreLocal, StoreRemote {
 
         Product product = productList.get(0);
 
+        AuditMessageTO auditMessageTO = new AuditMessageTO(product.getProductCode(),
+                Operation.GET.getOperation(),
+                LocalDateTime.now());
+        queueSender.sendTextMessage(auditMessageTO);
+
         return StoreConverter.toProductTO(product);
     }
 
@@ -76,6 +94,11 @@ public class StoreBean implements StoreLocal, StoreRemote {
             return 0;
         }
 
+        AuditMessageTO auditMessageTO = new AuditMessageTO(productCode,
+                Operation.GET.getOperation(),
+                LocalDateTime.now());
+        queueSender.sendTextMessage(auditMessageTO);
+
         return amountList.get(0);
     }
 
@@ -88,6 +111,11 @@ public class StoreBean implements StoreLocal, StoreRemote {
         if (minList.isEmpty()) {
             return 0;
         }
+
+        AuditMessageTO auditMessageTO = new AuditMessageTO(productCode,
+                Operation.GET.getOperation(),
+                LocalDateTime.now());
+        queueSender.sendTextMessage(auditMessageTO);
 
         return minList.get(0);
     }
@@ -103,6 +131,11 @@ public class StoreBean implements StoreLocal, StoreRemote {
             return null;
         }
 
+        AuditMessageTO auditMessageTO = new AuditMessageTO(productCode,
+                Operation.GET.getOperation(),
+                LocalDateTime.now());
+        queueSender.sendTextMessage(auditMessageTO);
+
         return locationList.get(0);
     }
 
@@ -115,6 +148,11 @@ public class StoreBean implements StoreLocal, StoreRemote {
         if (entryDateList.isEmpty()) {
             return 0;
         }
+
+        AuditMessageTO auditMessageTO = new AuditMessageTO(productCode,
+                Operation.GET.getOperation(),
+                LocalDateTime.now());
+        queueSender.sendTextMessage(auditMessageTO);
 
         return entryDateList.get(0);
     }
