@@ -6,17 +6,13 @@ import java.util.List;
 
 public interface StoreInterface {
 
-    public List<ProductTO> getAllProductCodes();
+    Response storeNewProduct(ProductTO product);
 
-    public ProductTO getProduct(String productCode);
+    Response getProduct(String productCode);
 
-    public Response getProductAmount(String productCode);
+    List<ProductTO> getAllProducts();
 
-    public Response getMinimumAmount(String productCode);
+    Response updateProduct(ProductTO product, String productCode);
 
-    public Response getLocation(String productCode);
-
-    public Response getEnterDate(String productCode);
-
-    public Response storeNewProduct(ProductTO product);
+    Response deleteProduct(String productCode);
 }

@@ -1,0 +1,162 @@
+{
+  "info": {
+    "_postman_id": "5aec0be7-8b43-4603-94c8-24fc8ac8db77",
+    "name": "Store",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "19408255"
+  },
+  "item": [
+    {
+      "name": "Store product",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"productCode\": \"P12359\",\r\n  \"amountStored\": 60,\r\n  \"minimumAmount\": 20,\r\n  \"location\": \"Warehouse B\",\r\n  \"enterDate\": 20231001\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/trabalho-web/api/store/product",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "trabalho-web",
+            "api",
+            "store",
+            "product"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get all stored products",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/trabalho-web/api/store/products",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "trabalho-web",
+            "api",
+            "store",
+            "products"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get product",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/trabalho-web/api/store/product/P12359",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "trabalho-web",
+            "api",
+            "store",
+            "product",
+            "P12359"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update product",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"amountStored\": 70,\r\n  \"minimumAmount\": 10,\r\n  \"location\": \"Warehouse C\",\r\n  \"enterDate\": 20241001\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/trabalho-web/api/store/product/P12359",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "trabalho-web",
+            "api",
+            "store",
+            "product",
+            "P12359"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update product Copy",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/trabalho-web/api/store/product/P12359",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "trabalho-web",
+            "api",
+            "store",
+            "product",
+            "P12359"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get all audicts",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/trabalho-web/api/audit",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "trabalho-web",
+            "api",
+            "audit"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
