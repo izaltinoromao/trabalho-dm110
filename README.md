@@ -2,11 +2,12 @@
 
 ## 🎓 About Project
 
-This project is a Java EE application that manages product storage and audit logging.
-It provides RESTful services for querying and managing product information, such as
-product codes, stored amounts, minimum amounts, location, and entry date. Additionally,
-the application logs audit messages for product storage events and other relevant actions,
-utilizing Java Messaging Services (JMS) for sending these messages asynchronously to an audit queue.
+This project is a Java EE application that manages product storage and audit logging. It provides RESTful services for
+querying and managing product information such as product codes, stored amounts, minimum amounts, location, and entry
+date. Additionally, the application logs audit messages for product storage events and other relevant actions, utilizing
+Java Messaging Services (JMS) for sending these messages asynchronously to an audit queue.
+
+The project uses Maven for build management, WildFly as the application server, and HSQLDB for database persistence.
 
 ---
 
@@ -16,7 +17,7 @@ The following tools were used in the construction of the project:
 
 - Java 17
 - Maven
-- Wildfly
+- WildFly
 - HSQLDB
 
 ![Apache Maven](https://img.shields.io/badge/Apache%20Maven-C71A36?style=for-the-badge&logo=Apache%20Maven&logoColor=white)
@@ -24,45 +25,32 @@ The following tools were used in the construction of the project:
 
 ### Tools
 
-- Intellij
+- IntelliJ
 - Postman
 
 ![Intellij Badge](https://img.shields.io/badge/IntelliJ_IDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white)
 ![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=Postman&logoColor=white)
 
-
 ---
 
 ## 📁 Class Diagram
 
-###          
+The following diagram represents the structure of the project and how the different classes interact:
 
-### Sequence Diagrams
+<p align="center">
+    <img alt="Class Diagram" style="width: 700px; margin: 0 10px" src="docs/ClassDiagram.png">
+</p>
 
-The class diagram represents the overall structure of the application, detailing the interaction between various
-components:
+The key components of the project are:
 
-- **Audit**: Interfaces and classes responsible for audit logging. The `AuditBean` contains methods to save and retrieve
-  audit logs, while the `AuditQueueSender` sends messages to the JMS queue.
-- **Product Management**: Interfaces and classes responsible for product storage management. The `StoreBean` manages
-  products, and the `StoreResource` exposes the REST API endpoints.
-- **Converters**: Utility classes that convert between entity objects (`Product`, `AuditMessage`) and their transfer
+- **Audit**: Interfaces and classes responsible for audit logging. The `AuditBean` handles audit log management,
+  while `AuditQueueSender` sends audit messages to a JMS queue.
+- **Product Management**: Interfaces and classes responsible for managing product storage. `StoreBean` performs product
+  operations, and `StoreResource` exposes REST API endpoints.
+- **Converters**: Utility classes to convert between entity objects (`Product`, `AuditMessage`) and their transfer
   object (TO) equivalents (`ProductTO`, `AuditMessageTO`).
 - **REST Resources**: `AuditResource` and `StoreResource` provide RESTful endpoints for interacting with the
   application’s core functionalities.
-
-<p align="center" style="display: flex; flex-direction: column; align-items: flex-start; justify-content: center;">
-    <p align="center" style="display: flex; align-items: flex-start; justify-content: center;">
-    <img alt="SequenceDiagramGet" style="width: 700px;  margin: 0 10px" 
-src="docs/ClassDiagram.png">
-    </p>
-
-The diagram includes:
-
-- Beans for business logic (`AuditBean`, `StoreBean`).
-- Entity classes for persistence (`Product`, `AuditMessage`).
-- REST resources for external interaction.
-- Interfaces and services (`AuditLocal`, `StoreLocal`) for audit logging and product management.
 
 ---
 
@@ -94,7 +82,7 @@ To clone and run this project locally, follow these steps:
 
 5. Start WildFly if it is not already running:
     ```bash
-    ./standalone.sh
+    ./standalone.sh -c=standalone-full.xml
     ```
 
 6. Access the application’s RESTful endpoints via the appropriate URLs, for example:
@@ -261,6 +249,8 @@ For all endpoints, if an error occurs (e.g., product not found, invalid request)
     }
     ```
 
+---
+
 ## 👥 Authors
 
 <table>
@@ -275,7 +265,8 @@ For all endpoints, if an error occurs (e.g., product not found, invalid request)
         <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Badge">
       </a>
       <a href="mailto:izaltino.neto@pg.inatel.br">
-        <img src="https://img.shields.io/badge/Outlook-0078D4?style=for-the-badge&logo=microsoft-outlook&logoColor=white" alt="Outlook Badge">
+        <img src="https://img.shields
+.io/badge/Outlook-0078D4?style=for-the-badge&logo=microsoft-outlook&logoColor=white" alt="Outlook Badge">
       </a>
     </td>
 <td>

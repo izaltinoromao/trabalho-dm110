@@ -6,6 +6,7 @@ interface AuditInterface {
 class AuditMessageTO {
     - LocalDateTime timeStamp
     - String message
+    + AuditMessageTO(String productCode, String operation, LocalDateTime timeStamp)
 }
 
 class ProductTO {
@@ -14,20 +15,19 @@ class ProductTO {
     - int minimumAmount
     - String location
     - int enterDate
+    + ProductTO(String productCode, int amountStored, int minimumAmount, String location, int enterDate)
 }
 
 interface StoreInterface {
-    + List<ProductTO> getAllProductCodes()
-    + ProductTO getProduct(String productCode)
-    + Response getProductAmount(String productCode)
-    + Response getMinimumAmount(String productCode)
-    + Response getLocation(String productCode)
-    + Response getEnterDate(String productCode)
     + Response storeNewProduct(ProductTO product)
+    + Response getProduct(String productCode)
+    + List<ProductTO> getAllProducts()
+    + Response updateProduct(ProductTO product, String productCode)
+    + Response deleteProduct(String productCode)
 }
 
 interface Audit {
-    + void saveAudit(String message)
+    + void saveAudit(AuditMessageTO message)
     + List<AuditMessageTO> getAllAudits()
 }
 
@@ -38,13 +38,11 @@ interface AuditRemote extends Audit {
 }
 
 interface Store {
-    + List<ProductTO> getAllProductCodes()
-    + ProductTO getProduct(String productCode)
-    + int getProductAmount(String productCode)
-    + int getMinimumAmount(String productCode)
-    + String getLocation(String productCode)
-    + int getEnterDate(String productCode)
     + ProductTO storeNewProduct(ProductTO product)
+    + ProductTO getProduct(String productCode)
+    + List<ProductTO> getAllProducts()
+    + ProductTO updateProduct(ProductTO product, String productCode)
+    + void deleteProduct(String productCode)
 }
 
 interface StoreLocal extends Store {
@@ -56,15 +54,15 @@ interface StoreRemote extends Store {
 class AuditBean {
     - Logger log
     - EntityManager em
-    + void saveAudit(String message)
+    + void saveAudit(AuditMessageTO message)
     + List<AuditMessageTO> getAllAudits()
 }
 
 class AuditQueueSender {
     - Logger log
-    - ConnectionFactory connectionFactory
-    - Queue queue
-    + void sendTextMessage(String text)
+    - ConnectionFactory
+    - Queue
+    + void sendTextMessage(AuditMessageTO)
 }
 
 class StoreBean {
@@ -72,18 +70,18 @@ class StoreBean {
     - EntityManager em
     - AuditQueueSender queueSender
     + ProductTO storeNewProduct(ProductTO product)
-    + List<ProductTO> getAllProductCodes()
     + ProductTO getProduct(String productCode)
-    + int getProductAmount(String productCode)
-    + int getMinimumAmount(String productCode)
-    + String getLocation(String productCode)
-    + int getEnterDate(String productCode)
+    + List<ProductTO> getAllProducts()
+    + ProductTO updateProduct(ProductTO product, String productCode)
+    + void deleteProduct(String productCode)
 }
 
 class AuditMessage {
     - int id
+    - String productCode
+    - String operation
     - LocalDateTime timeStamp
-    - String message
+    + AuditMessage(String productCode, String operation, LocalDateTime timeStamp)
 }
 
 class Product {
@@ -94,15 +92,15 @@ class Product {
     - int enterDate
 }
 
-class AuditConverter {
-    + static AuditMessageTO toAuditMessageTO(AuditMessage auditMessage)
-    + static List<AuditMessageTO> toAuditMessageTOList(List<AuditMessage> auditMessageList)
+class StoreConverter {
+    + static ProductTO toProductTO(Product)
+    + static List<ProductTO> toProductTOList(List<Product> productList)
+    + static Product toProduct(ProductTO)
 }
 
-class StoreConverter {
-    + static ProductTO toProductTO(Product product)
-    + static List<ProductTO> toProductTOList(List<Product> productList)
-    + static Product toProduct(ProductTO productTO)
+class AuditConverter {
+    + static AuditMessageTO toAuditMessageTO(AuditMessage)
+    + static List<AuditMessageTO> toAuditMessageTOList(List<AuditMessage> auditMessageList)
 }
 
 class AuditResource {
@@ -112,17 +110,21 @@ class AuditResource {
 
 class StoreResource {
     - StoreLocal storeBean
-    + List<ProductTO> getAllProductCodes()
-    + ProductTO getProduct(String productCode)
-    + Response getProductAmount(String productCode)
-    + Response getMinimumAmount(String productCode)
-    + Response getLocation(String productCode)
-    + Response getEnterDate(String productCode)
     + Response storeNewProduct(ProductTO product)
+    + Response getProduct(String productCode)
+    + List<ProductTO> getAllProducts()
+    + Response updateProduct(ProductTO product, String productCode)
+    + Response deleteProduct(String productCode)
 }
 
 class RestApplication {
     + Set<Class<?>> getClasses()
+}
+
+class AuditQueueMDB {
+    - Logger log
+    - AuditLocal auditBean
+    + void onMessage(Message)
 }
 
 AuditBean --> AuditLocal
@@ -140,4 +142,6 @@ StoreConverter --> Product
 
 AuditResource --> AuditLocal
 StoreResource --> StoreLocal
+
+AuditQueueMDB --> AuditLocal
 @enduml
